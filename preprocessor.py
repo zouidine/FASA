@@ -24,8 +24,9 @@ class Preprocessor():
         text = re.sub("ة", "ه", text)
         return text
 
-    def clean_and_tokenize(self, sentences):
+    def clean_and_tokenize(self, sentences, labels):
         clean_sentences = []
+        clean_labels = []
         for i in range(len(sentences)):
             text = sentences[i]
             # Cleaning
@@ -38,7 +39,8 @@ class Preprocessor():
                 text.insert(0, self.tokenizer.cls_token)
                 text.append(self.tokenizer.sep_token)
                 clean_sentences.append(text)
-        return clean_sentences
+                clean_labels.append(labels[i])
+        return clean_sentences, clean_labels
 
     def creat_tensor(self, sentences):
         max_len = max([len(sen) for sen in sentences])
